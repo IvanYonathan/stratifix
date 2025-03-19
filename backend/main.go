@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// Connect to PostgreSQL with GORM
-	dsn := "host=localhost user=postgres password=1234 dbname=ticketing_db port=5432 sslmode=disable"
+	dsn := "host=localhost user=postgres password= dbname=ticketing_db port=5432 sslmode=disable"
 	// Override with environment variable if provided
 	if os.Getenv("DATABASE_URL") != "" {
 		dsn = os.Getenv("DATABASE_URL")
