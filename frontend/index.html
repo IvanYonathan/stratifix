@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Ticket Booking System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Event Ticket Booking</h1>
+        <p>Secure your seats for the hottest events!</p>
+        <div class="countdown">
+            <div class="countdown-item">
+                <span class="count" id="days">00</span>
+                <span class="count-label">Days</span>
+            </div>
+            <div class="countdown-item">
+                <span class="count" id="hours">00</span>
+                <span class="count-label">Hours</span>
+            </div>
+            <div class="countdown-item">
+                <span class="count" id="minutes">00</span>
+                <span class="count-label">Minutes</span>
+            </div>
+            <div class="countdown-item">
+                <span class="count" id="seconds">00</span>
+                <span class="count-label">Seconds</span>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="success-message" id="successMessage">
+            Your booking has been confirmed! Check your email for the tickets.
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            There was an error processing your booking. Please try again.
+        </div>
+        
+        <div class="card">
+            <div class="event-details">
+                <div class="event-image">
+                    <img src="https://placehold.co/600x400" alt="Event Banner">
+                </div>
+                <div class="event-info">
+                    <h2>Concert: Ultimate Music Experience</h2>
+                    <p><strong>Date & Time:</strong> March 25, 2025 - 7:00 PM</p>
+                    <p><strong>Venue:</strong> Grand Arena, Downtown</p>
+                    <p><strong>Duration:</strong> 3 hours</p>
+                    <p>Experience an unforgettable night of music with the world's top performers. This exclusive concert features an incredible lineup of artists performing their greatest hits live on stage.</p>
+                    <div class="seat-status-live">
+                        <span class="live-indicator"></span>
+                        <span>Live seat availability - <strong><span id="availableSeatsCount">245</span> seats remaining</strong></span>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title">Select Ticket Type</h3>
+            <div class="ticket-types">
+                <div class="ticket-type" data-type="standard" data-price="50">
+                    <h4>Standard Ticket</h4>
+                    <p>Access to regular seating</p>
+                    <p><strong>$50</strong></p>
+                </div>
+                <div class="ticket-type" data-type="premium" data-price="100">
+                    <h4>Premium Ticket</h4>
+                    <p>Better view with premium seating</p>
+                    <p><strong>$100</strong></p>
+                </div>
+                <div class="ticket-type" data-type="vip" data-price="200">
+                    <h4>VIP Experience</h4>
+                    <p>Best seats + backstage access</p>
+                    <p><strong>$200</strong></p>
+                </div>
+            </div>
+            
+            <h3 class="section-title">Choose Your Seats</h3>
+            
+            <div class="seats-container">
+                <div class="stage">STAGE</div>
+                
+                <div class="seat-legend">
+                    <div class="legend-item">
+                        <div class="legend-box legend-available"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box legend-selected"></div>
+                        <span>Selected</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box legend-booked"></div>
+                        <span>Booked</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box legend-vip"></div>
+                        <span>VIP</span>
+                    </div>
+                </div>
+                
+                <div class="seating-grid" id="seatingGrid">
+                    <!-- Seating will be generated with JavaScript -->
+                </div>
+            </div>
+            
+            <h3 class="section-title">Personal Information</h3>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" required>
+                </div>
+                
+                <h3 class="section-title">Payment Summary</h3>
+                <div class="summary">
+                    <div class="summary-item">
+                        <span>Ticket Type</span>
+                        <span id="summaryTicketType">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Number of Seats</span>
+                        <span id="summarySeats">0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Selected Seats</span>
+                        <span id="summarySelectedSeats">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Ticket Price</span>
+                        <span id="summaryPrice">$0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Booking Fee</span>
+                        <span id="summaryFee">$0</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total</span>
+                        <span id="summaryTotal">$0</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="confirmBookingBtn">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeSuccessModal">&times;</span>
+            <h2>Booking Confirmed!</h2>
+            <p>Thank you for your purchase. Your tickets are on the way to your email.</p>
+            
+            <div class="ticket">
+                <div class="ticket-header">
+                    <h3>Ultimate Music Experience</h3>
+                    <p>March 25, 2025 - 7:00 PM</p>
+                </div>
+                <div class="ticket-body">
+                    <div class="ticket-info">
+                        <div class="ticket-info-item">
+                            <div class="ticket-info-label">Name</div>
+                            <div class="ticket-info-value" id="ticketName">John Doe</div>
+                        </div>
+                        <div class="ticket-info-item">
+                            <div class="ticket-info-label">Ticket Type</div>
+                            <div class="ticket-info-value" id="ticketType">VIP</div>
+                        </div>
+                        <div class="ticket-info-item">
+                            <div class="ticket-info-label">Seats</div>
+                            <div class="ticket-info-value" id="ticketSeats">A1, A2</div>
+                        </div>
+                    </div>
+                    <div class="ticket-info">
+                        <div class="ticket-info-item">
+                            <div class="ticket-info-label">Order ID</div>
+                            <div class="ticket-info-value" id="ticketOrderId">TKT-12345</div>
+                        </div>
+                        <div class="ticket-info-item">
+                            <div class="ticket-info-label">Venue</div>
+                            <div class="ticket-info-value">Grand Arena</div>
+                        </div>
+                        <div class="ticket-info-item">
+                            <div class="ticket-info-label">Gate</div>
+                            <div class="ticket-info-value">Gate B</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ticket-qr">
+                    <div class="qr-code">
+                        <img src="https://placehold.co/120x120" alt="QR Code">
+                    </div>
+                    <small>Scan this QR code at the entrance</small>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" id="downloadTicketBtn">Download Ticket</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
